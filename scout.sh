@@ -40,7 +40,7 @@ clean() {
 }
 
 scout() {
-	sudo nmap -Pn -sS -oN initial/full $IP && masscan $IP -p0-1000 || echo "Usage: scout 10.0.0.1" 
+	masscan $IP -p0-65535 --max-rate 100000 && sudo nmap -Pn -sS -oN initial/full $IP || echo "Usage: scout 10.0.0.1" 
 }
 
 install_tools && clean && scout
