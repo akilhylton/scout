@@ -1,5 +1,6 @@
 #!/bin/bash
 
+IP=$1
 AMASS_DIR="/usr/local/bin/amass"
 AMASS_VER="amass_linux_amd64.zip"
 AMASS_BIN="https://github.com/OWASP/Amass/releases/download/v3.12.3/$AMASS_VER"
@@ -34,4 +35,8 @@ clean() {
 	ls | grep -e "^\a" | xargs rm -rf
 }
 
-install_tools && clean
+scout() {
+	echo "Test $IP"
+}
+
+install_tools && clean && scout
