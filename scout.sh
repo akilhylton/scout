@@ -36,7 +36,7 @@ amass && gowitness && masscan
 }
 
 clean() {
-	ls | grep -e "^\a" -e 1* -e "^\m" | xargs rm -rf
+	ls | grep -e "^\a" -e 1 -e "^\m" | xargs rm -rf
 }
 
 scout() {
