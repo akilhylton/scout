@@ -28,7 +28,7 @@ gowitness() {
 }
 mscan() {
 	if [ ! -f $MASSCAN_DIR ]; then
-		wget $MASSCAN_ZIP && unzip $MASSCAN_VER && cd masscan-1.3.2/ && make && mv $MASSCAN_BIN $MASSCAN_DIR
+		apt install masscan || wget $MASSCAN_ZIP && unzip $MASSCAN_VER && cd masscan-1.3.2/ && make && mv $MASSCAN_BIN $MASSCAN_DIR
 	fi
         echo "Masscan is installed and located at $MASSCAN_DIR"
 }
