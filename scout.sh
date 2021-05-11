@@ -7,7 +7,11 @@ AMASS_BIN="https://github.com/OWASP/Amass/releases/download/v3.12.3/$AMASS_VER"
 GOWITNESS_DIR="/usr/local/bin/gowitness"
 GOWITNESS_VER="gowitness-2.3.4-linux-amd64"
 GOWITNESS_BIN="https://github.com/sensepost/gowitness/releases/download/2.3.4/$GOWITNESS_VER"
-MASSCAN_DIR="/usr/bin/masscan"
+
+MASSCAN_DIR="/usr/local/bin/masscan"
+MASSCAN_VER="1.3.2.zip"
+MASSCAN_BIN="bin/masscan"
+MASSCAN_ZIP="https://github.com/robertdavidgraham/masscan/archive/refs/tags/$MASSCAN_VER"
 
 install_tools() {
 amass() {
@@ -24,7 +28,7 @@ gowitness() {
 }
 masscan() {
 	if [ ! -f $MASSCAN_DIR ]; then
-		sudo apt install masscan
+		wget $MASSCAN_ZIP && unzip $MASSCAN_VER && cd masscan-1.3.2/ && make && mv $MASSCAN_BIN $MASSCAN_DIR
 	fi
         echo "Masscan is installed and located at $MASSCAN_DIR"
 }
@@ -32,11 +36,11 @@ amass && gowitness && masscan
 }
 
 clean() {
-	ls | grep -e "^\a" | xargs rm -rf
+	ls | grep -e "^\a" -e 1* -e "^\m" | xargs rm -rf
 }
 
 scout() {
-	echo "Test $IP"
+	nmap -Pn -sS -sO initial/full $IP && amass $IP || echo "Usage: scout 10.0.0.1" 
 }
 
 install_tools && clean && scout
