@@ -26,13 +26,13 @@ gowitness() {
         fi
 	echo "Gowitness is installed and located at $GOWITNESS_DIR"
 }
-masscan() {
+mscan() {
 	if [ ! -f $MASSCAN_DIR ]; then
 		wget $MASSCAN_ZIP && unzip $MASSCAN_VER && cd masscan-1.3.2/ && make && mv $MASSCAN_BIN $MASSCAN_DIR
 	fi
         echo "Masscan is installed and located at $MASSCAN_DIR"
 }
-amass && gowitness && masscan
+amass && gowitness && mscan
 }
 
 clean() {
@@ -40,7 +40,7 @@ clean() {
 }
 
 scout() {
-	nmap -Pn -sS -sO initial/full $IP && amass $IP || echo "Usage: scout 10.0.0.1" 
+	sudo nmap -Pn -sS -oN initial/full $IP && masscan $IP -p0-1000 || echo "Usage: scout 10.0.0.1" 
 }
 
 install_tools && clean && scout
