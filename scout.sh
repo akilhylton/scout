@@ -40,7 +40,7 @@ clean() {
 }
 
 scout() {
-	masscan $IP -p0-65535 --max-rate 100000 && sudo nmap -Pn -sS -oN initial/full $IP || echo "Usage: scout 10.0.0.1" 
+	nikto -h $IP | tee initial/nikto.txt && sudo nmap -Pn -sS -oN initial/full $IP || echo "Usage: scout 10.0.0.1" 
 }
 
 install_tools && clean && scout
