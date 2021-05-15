@@ -35,12 +35,18 @@ mscan() {
 amass && gowitness && mscan
 }
 
+networkmap() {
+	sudo nmap -v -Pn -sV -p 80,443 -oN initial/web $IP && 
+	sudo nmap -O -sC -oN initial/os $IP &&
+	sudo nmap -Pn -sS -oN initial/quick $IP && sudo nmap -A initial/full $IP 
+	
+}
 clean() {
 	ls | grep -e "^\a" -e 1 -e "^\m" | xargs rm -rf
 }
 
 scout() {
-	nikto -h $IP | tee initial/nikto.txt && sudo nmap -Pn -sS -oN initial/full $IP || echo "Usage: scout 10.0.0.1" 
+	nikto -h $IP | tee initial/nikto.txt && networkmap || echo "Usage: scout 10.0.0.1" 
 }
 
 install_tools && clean && scout
