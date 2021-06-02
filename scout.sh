@@ -38,7 +38,7 @@ amass && gowitness && mscan
 networkmap() {
 	sudo nmap -v -Pn -sV -p 80,443 -oN initial/web $IP && 
 	sudo nmap -O -sC -oN initial/os $IP &&
-	sudo nmap -Pn -sS -oN initial/quick $IP && sudo nmap -A initial/full $IP 
+	sudo nmap -Pn -sS -oN initial/quick $IP && sudo nmap -A -oN initial/full $IP 
 	
 }
 clean() {
