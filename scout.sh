@@ -32,7 +32,11 @@ mscan() {
 	fi
         echo "Masscan is installed and located at $MASSCAN_DIR"
 }
-amass && gowitness && mscan
+clean() {
+	ls | grep -e "^\a" -e 1 -e "^\m" -e "^\g" | xargs rm -rf
+}
+
+amass && gowitness && mscan && clean
 }
 
 networkmap() {
@@ -41,12 +45,8 @@ networkmap() {
 	sudo nmap -Pn -sS -oN initial/quick $IP && sudo nmap -A -oN initial/full $IP 
 	
 }
-clean() {
-	ls | grep -e "^\a" -e 1 -e "^\m" | xargs rm -rf
-}
-
 scout() {
 	nikto -h $IP | tee initial/nikto.txt && networkmap || echo "Usage: scout 10.0.0.1" 
 }
 
-install_tools && clean && scout
+install_tools && scout
